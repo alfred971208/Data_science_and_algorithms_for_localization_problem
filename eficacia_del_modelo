@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Carga los datos desde el archivo de Excel
+#  Carga los datos desde el archivo de Excel
 xls = pd.ExcelFile('/content/predicciones (9).xlsx')
 
 # Carga cada hoja en un dataframe
