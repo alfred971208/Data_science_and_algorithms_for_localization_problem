@@ -1,7 +1,16 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import statsmodels.formula.api as smf
+import statsmodels.stats.api as sms
+import geopandas as gpd
+import matplotlib.colors as mcolors
+from sklearn import set_config
 from collections import OrderedDict
+from sklearn import set_config
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+from statsmodels.compat import lzip
+
 
 best_params = OrderedDict([('model__en__alpha', 1.8329807108324375e-05),
                            ('model__en__l1_ratio', 1.0),
@@ -20,9 +29,6 @@ best_params = OrderedDict([('model__en__alpha', 1.8329807108324375e-05),
 params_df = pd.DataFrame.from_dict(best_params, orient='index', columns=['Value'])
 print(params_df)
 
-
-from sklearn import set_config
-
 pipe = Pipeline(steps=[('boxcox_transformer', boxcox_transformer),
                        ('preprocessor', preprocessor),
                        ('polynomial_transformer', polynomial_transformer),
@@ -32,8 +38,6 @@ pipe = Pipeline(steps=[('boxcox_transformer', boxcox_transformer),
 
 set_config(display='diagram')
 print(pipe)
-
-from sklearn import set_config
 
 set_config(display='diagram')
 
@@ -149,9 +153,6 @@ plt.grid()
 plt.show()
 
 # Imprime ell coeficiente de determinación R^2
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-
 # Calcula los residuos
 predictions = pipe.predict(train.drop('Variable 9 (Objetivo)', axis=1))
 residuos = train['Variable 9 (Objetivo)'] - predictions
@@ -306,11 +307,6 @@ for key, value in result[4].items():
     print(f'   {key}, {value}')
 
 # Realiza la prueba de Breusch-Pagan para los datos residuales
-
-from statsmodels.compat import lzip
-import statsmodels.formula.api as smf
-import statsmodels.stats.api as sms
-
 # Primero necesitamos obtener los residuos del modelo de entrenamiento.
 residuals = train['Variable 9 (Objetivo)'] - pipe.predict(train.drop('Variable 9 (Objetivo)', axis=1))
 
@@ -322,11 +318,6 @@ bp_test = sms.het_breuschpagan(residuals, transformed_features)
 
 labels = ['LM Statistic', 'LM-Test p-value', 'F-Statistic', 'F-Test p-value']
 print(dict(zip(labels, bp_test)))
-
-
-import geopandas as gpd
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 # Cargar el archivo GeoJSON
 datos_geo = gpd.read_file('/content/drive/MyDrive/hgomunicipal.geojson')
