@@ -135,7 +135,7 @@ for feature in num_features:
 
 print(results.keys())
 
-# Extraer los valores de 'model__gb__max_depth'
+# Extraer los  valores de 'model__gb__max_depth'
 param_values = [dic['model__gb__max_depth'] for dic in results['params'] if 'model__gb__max_depth' in dic]
 
 mean_test_scores = results['mean_test_score']
