@@ -229,7 +229,7 @@ for transformer in pipe.named_steps['preprocessor'].transformers_:
 rf = RandomForestRegressor()
 rf.fit(pipe.transform(train.drop('Variable 9 (Objetivo)', axis=1)), train['Variable 9 (Objetivo)'])
 
-# Obtiene las importancias de las características
+#  Obtiene las importancias de las características
 importances = rf.feature_importances_
 
 # Imprime las importancias de las características
