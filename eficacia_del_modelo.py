@@ -1,4 +1,8 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 #  Carga los datos desde el archivo de Excel
 xls = pd.ExcelFile('/content/predicciones (9).xlsx')
@@ -20,9 +24,6 @@ df_combinado = pd.merge(df_hoja1, df_hoja2, on=['Municipio', 'Año'])
 # Muestra las primeras filas del dataframe combinado
 df_combinado.head()
 
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-import numpy as np
-
 # Calcula el Error Absoluto Medio (MAE)
 mae = mean_absolute_error(df_combinado['Valor_Real'], df_combinado['Valor_Predicho'])
 
@@ -36,8 +37,6 @@ mape = np.mean(np.abs((df_combinado['Valor_Real'] - df_combinado['Valor_Predicho
 r2 = r2_score(df_combinado['Valor_Real'], df_combinado['Valor_Predicho'])
 
 mae, mse, mape, r2
-
-import matplotlib.pyplot as plt
 
 # Grafica los valores reales y los valores pronosticados
 plt.figure(figsize=(14, 6))
@@ -55,10 +54,6 @@ plt.ylabel('Valor')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-import pandas as pd
-import matplotlib.pyplot as plt
-import statsmodels.api as sm
 
 # Cargar ambos conjuntos de datos desde las hojas del archivo Excel
 df_hoja1 = pd.read_excel("/content/predicciones (9).xlsx", 'Sheet1')
