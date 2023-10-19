@@ -10,7 +10,10 @@ from sklearn import set_config
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from statsmodels.compat import lzip
-
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import cross_val_score, RepeatedKFold
+from statsmodels.tsa.stattools import adfuller
+from sklearn.model_selection import learning_curve
 
 best_params = OrderedDict([('model__en__alpha', 1.8329807108324375e-05),
                            ('model__en__l1_ratio', 1.0),
@@ -121,7 +124,7 @@ for feature in num_features:
     plt.legend()
     plt.show()
 
-from sklearn.preprocessing import MinMaxScaler
+
 
 # Escalar los datos antes de graficar
 scaler = MinMaxScaler()
@@ -252,8 +255,6 @@ for feature in num_features:
     print(f'Correlación de {feature} con la variable objetivo: {correlation}')
 
 # Definimos e imprimimos el MAE promedio
-
-from sklearn.model_selection import cross_val_score, RepeatedKFold
 rkf = RepeatedKFold(n_splits=5, n_repeats=5)
 scores = cross_val_score(pipe, train.drop('Variable 9 (Objetivo)', axis=1), train['Variable 9 (Objetivo)'], scoring='neg_mean_absolute_error', cv=rkf)
 print('MAE promedio: ', np.mean(np.abs(scores)))
@@ -263,8 +264,6 @@ sns.scatterplot(x='Variable 10', y='Variable 9 (Objetivo)', data=data)
 plt.show()
 
 # Imprimimos la gráfica de curva de aprendizaje
-
-from sklearn.model_selection import learning_curve
 
 train_sizes, train_scores, valid_scores = learning_curve(
     pipe, train.drop('Variable 9 (Objetivo)', axis=1), train['Variable 9 (Objetivo)'], train_sizes=np.linspace(0.1, 1.0, 5))
@@ -285,8 +284,6 @@ test_mae = mean_absolute_error(test['Variable 9 (Objetivo)'], test_predictions)
 print("Test MAE: ", test_mae)
 
 # Prueba de adfuller para la variable objetivo de entrada
-
-from statsmodels.tsa.stattools import adfuller
 
 # Realiza la prueba ADF en tus datos de entrada
 result = adfuller(train['Variable 9 (Objetivo)'])
