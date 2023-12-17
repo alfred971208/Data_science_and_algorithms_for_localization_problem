@@ -22,18 +22,18 @@ df = df.drop('Unnamed: 0', axis = 1)
 
 df
 
-# Cargando bibliotecas y datos nuevamente
+# Cargando bibliotecas y datos 
 data = pd.read_excel("/content/drive/MyDrive/Copia de val.xlsx")
 X = data.drop(columns=["Cabezas de ganado bovino (Objetivo)", "Municipio", "Unnamed: 0"])
 y = data["Cabezas de ganado bovino (Objetivo)"]
 
-# Realizando LDA nuevamente
+# LDA 
 lda = LDA(n_components=2)
 X_lda = lda.fit_transform(X, y)
 result = pd.DataFrame(X_lda, columns=['LDA1', 'LDA2'])
 result['Municipio'] = data['Municipio']
 
-# Aplicando KMeans con k=4 nuevamente
+# Aplicando KMeans con k=4 
 k_optimal = 4
 kmeans = KMeans(n_clusters=k_optimal, random_state=42)
 clusters = kmeans.fit_predict(X)
@@ -46,13 +46,13 @@ plt.title("Análisis de Clúster de Municipios en Espacio LDA")
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.show()
 
-# Aplicar PCA nuevamente y obtener los tres primeros componentes
+# Aplicar PCA  y obtener los tres primeros componentes
 pca = PCA(n_components=3)
 X_pca = pca.fit_transform(X)
 result_3d = pd.DataFrame(X_pca, columns=['PCA1', 'PCA2', 'PCA3'])
 result_3d['Cluster'] = clusters
 
-# Visualización en 3D nuevamente
+# Visualización en 3D 
 fig = plt.figure(figsize=(15, 10))
 ax = fig.add_subplot(111, projection='3d')
 colors = sns.color_palette("Set2", n_colors=k_optimal)
