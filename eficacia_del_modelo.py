@@ -103,3 +103,51 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
+# Carga ambos conjuntos de datos desde las hojas del archivo Excel
+df_hoja1 = pd.read_excel("/content/predicciones (9).xlsx", 'Sheet1')
+df_hoja2 = pd.read_excel("/content/predicciones (9).xlsx", 'Hoja1')
+
+# Renombra la columna 'Valor' en cada dataframe para mayor claridad
+df_hoja1.rename(columns={'Valor': 'Valor_Predicho'}, inplace=True)
+df_hoja2.rename(columns={'Valor': 'Valor_Real'}, inplace=True)
+
+# Combina los dos dataframes basándose en 'Municipio' y 'Año'
+df_combinado = pd.merge(df_hoja1, df_hoja2, on=['Municipio', 'Año'])
+
+# Selecciona un municipio aleatorio para la visualización
+municipio_aleatorio = df_combinado['Municipio'].sample(1).values[0]
+datos_a_graficar = df_combinado[df_combinado['Municipio'] == municipio_aleatorio]
+
+# Aplica el filtro HP para obtener la tendencia de los valores reales y pronosticados
+_, tendencia_real = sm.tsa.filters.hpfilter(datos_a_graficar['Valor_Real'], lamb=1600)
+
+# Extrae datos pronosticados hasta el 2030 para el municipio seleccionado
+datos_pronosticados_2030 = df_hoja1[(df_hoja1['Municipio'] == municipio_aleatorio) & (df_hoja1['Año'] <= 2030)]
+
+# Aplica el filtro HP para obtener la tendencia de los valores pronosticados hasta el 2030
+_, tendencia_predicho_2030 = sm.tsa.filters.hpfilter(datos_pronosticados_2030['Valor_Predicho'], lamb=1600)
+
+# Establece el rango de años desde el inicio del conjunto de datos hasta el 2030
+rango_anos = range(df_combinado['Año'].min(), 2031)
+
+# Grafica
+plt.figure(figsize=(14, 6))
+
+# Valores reales y su tendencia
+plt.plot(datos_a_graficar['Año'], datos_a_graficar['Valor_Real'], label='Valores Reales', marker='o')
+plt.plot(datos_a_graficar['Año'], tendencia_real, label='Tendencia Reales (Filtro HP)', linestyle='--')
+
+# Valores pronosticados hasta 2030 y su tendencia
+plt.plot(datos_pronosticados_2030['Año'], datos_pronosticados_2030['Valor_Predicho'], label='Valores Pronosticados', marker='x')
+plt.plot(datos_pronosticados_2030['Año'], tendencia_predicho_2030, label='Tendencia Pronosticados (Filtro HP)', linestyle=':')
+
+# Ajustes del gráfico
+plt.title('Comparación de Valores Reales y Pronosticados (hasta 2030) y sus Tendencias para el Municipio: ' + municipio_aleatorio)
+plt.xlabel('Año')
+plt.ylabel('Cabezas de ganado')
+plt.xticks(rango_anos)
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
