@@ -47,11 +47,11 @@ set_config(display='diagram')
 # Asume que 'pipe' es tu pipeline de aprendizaje automático
 print(pipe)
 
-# Asumamos que 'search' es tu objeto GridSearchCV o BayesSearchCV después de ajustarlo.
+# Asume que 'search' es tu objeto GridSearchCV o BayesSearchCV después de ajustarlo.
 # cv_results_ contiene información detallada acerca de la búsqueda.
 results = search.cv_results_
 
-# Supongamos que estamos interesados en el parámetro 'model__rf__n_estimators'
+# parámetro 'model__rf__n_estimators'
 param = 'param_model__rf__n_estimators'
 param_values = results[param].data
 mean_test_scores = results['mean_test_score']
@@ -64,7 +64,7 @@ plt.plot(param_values, mean_test_scores, marker='o')
 plt.grid()
 plt.show()
 
-# Almacenar los resultados en una variable
+# Almacena los resultados en una variable
 results = pd.DataFrame(search.cv_results_)
 
 print(results)
@@ -75,13 +75,13 @@ print(data_train_transformed.isnull().sum())
 # Valores Infinitos
 print(np.isinf(data_train_transformed).sum())
 
-# Verificar si hay valores no positivos
+# Verifica si hay valores no positivos
 print((data_train <= 0).sum())
 
 for feature in num_features:
     print(f"{feature} tiene {data_train[feature].nunique()} valores únicos.")
 
-# Generar un gráfico de densidad para cada característica numérica
+# Genera un gráfico de densidad para cada característica numérica
 for feature in num_features:
     plt.figure(figsize=(12, 6))
     sns.histplot(data_train[feature], kde=True)
@@ -103,7 +103,7 @@ plt.show()
 sns.boxplot(data=data_train_transformed)
 plt.show()
 
-# Generar histogramas con diferentes bins para cada característica numérica
+# Genera histogramas con diferentes bins para cada característica numérica
 bins_values = [10, 20, 50, 100]
 
 for feature in num_features:
@@ -115,7 +115,7 @@ for feature in num_features:
         plt.legend()
         plt.show()
 
-# Generar gráficos de densidad para cada característica numérica
+# Genera gráficos de densidad para cada característica numérica
 for feature in num_features:
     plt.figure(figsize=(12, 6))
     sns.kdeplot(data_train[feature], label='Original')
@@ -126,12 +126,12 @@ for feature in num_features:
 
 
 
-# Escalar los datos antes de graficar
+# Escala los datos antes de graficar
 scaler = MinMaxScaler()
 data_train_scaled = pd.DataFrame(scaler.fit_transform(data_train), columns=data_train.columns)
 data_train_transformed_scaled = pd.DataFrame(scaler.transform(data_train_transformed), columns=data_train_transformed.columns)
 
-# Generar un gráfico de densidad para cada característica numérica
+# Genera un gráfico de densidad para cada característica numérica
 for feature in num_features:
     plt.figure(figsize=(12, 6))
     plt.hist(data_train_scaled[feature], bins=30, alpha=0.5, label='Original')
@@ -155,7 +155,7 @@ plt.plot(param_values, mean_test_scores, marker='o')
 plt.grid()
 plt.show()
 
-# Imprime ell coeficiente de determinación R^2
+# Imprime el coeficiente de determinación R^2
 # Calcula los residuos
 predictions = pipe.predict(train.drop('Variable 9 (Objetivo)', axis=1))
 residuos = train['Variable 9 (Objetivo)'] - predictions
@@ -184,7 +184,7 @@ train_preprocessed = preprocessor.fit_transform(train.drop('Variable 9 (Objetivo
 # Luego, ajustamos el modelo a los datos preprocesados
 rf.fit(train_preprocessed, train['Variable 9 (Objetivo)'])
 
-# Obtenemos las importancias de las características
+# Obtiene las importancias de las características
 importances = rf.feature_importances_
 
 # Ahora necesitamos obtener los nombres de las características después del preprocesamiento.
@@ -193,7 +193,7 @@ feature_names = preprocessor.named_transformers_['cat'].get_feature_names_out(ca
 # Añadimos las características numéricas a la lista
 feature_names = np.concatenate([feature_names, num_features])
 
-# Verificamos si el número de características después del preprocesamiento coincide con la longitud de 'importances'
+# Verifica si el número de características después del preprocesamiento coincide con la longitud de 'importances'
 if len(feature_names) == len(importances):
     # Si coinciden, podemos hacer un gráfico de barras de las importancias de las características
     plt.barh(feature_names, importances)
@@ -207,15 +207,14 @@ rf.fit(train_preprocessed, train['Variable 9 (Objetivo)'])
 
 importances = rf.feature_importances_
 
-# Imprimimos la importancia de las variables
-
+# Imprime la importancia de las variables
 for feature, importance in zip(train.columns, importances):
     print(f"La importancia de {feature} es: {importance}")
 
-# Entrena tu pipeline
+# Entrena el pipeline
 pipe.fit(train.drop('Variable 9 (Objetivo)', axis=1), train['Variable 9 (Objetivo)'])
 
-# Obtén los nombres de las características después del preprocesamiento
+# Obtiene los nombres de las características después del preprocesamiento
 preprocessed_features = []
 for transformer in pipe.named_steps['preprocessor'].transformers_:
     # Para las características categóricas
@@ -229,18 +228,18 @@ for transformer in pipe.named_steps['preprocessor'].transformers_:
     else:
         preprocessed_features.extend(num_features)
 
-# Entrena tu RandomForestRegressor
+# Entrena el RandomForestRegressor
 rf = RandomForestRegressor()
 rf.fit(pipe.transform(train.drop('Variable 9 (Objetivo)', axis=1)), train['Variable 9 (Objetivo)'])
 
-#  Obtiene las importancias de las características
+# Obtiene las importancias de las características
 importances = rf.feature_importances_
 
 # Imprime las importancias de las características
 for feature, importance in zip(preprocessed_features, importances):
     print(f"La importancia de {feature} es: {importance}")
 
-# Imprimimos la garafica de residuales
+# Imprime la garafica de residuales
 
 predictions = pipe.predict(train.drop('Variable 9 (Objetivo)', axis=1))
 residuals = train['Variable 9 (Objetivo)'] - predictions
@@ -248,13 +247,13 @@ plt.scatter(predictions, residuals)
 plt.xlabel('Predicciones')
 plt.ylabel('Residuales')
 
-# Imprimimos la importancia de las varibales
+# Imprime la importancia de las varibales
 
 for feature in num_features:
     correlation = data[feature].corr(data['Variable 9 (Objetivo)'])
     print(f'Correlación de {feature} con la variable objetivo: {correlation}')
 
-# Definimos e imprimimos el MAE promedio
+# Define e imprimimos el MAE promedio
 rkf = RepeatedKFold(n_splits=5, n_repeats=5)
 scores = cross_val_score(pipe, train.drop('Variable 9 (Objetivo)', axis=1), train['Variable 9 (Objetivo)'], scoring='neg_mean_absolute_error', cv=rkf)
 print('MAE promedio: ', np.mean(np.abs(scores)))
@@ -263,7 +262,7 @@ print('MAE promedio: ', np.mean(np.abs(scores)))
 sns.scatterplot(x='Variable 10', y='Variable 9 (Objetivo)', data=data)
 plt.show()
 
-# Imprimimos la gráfica de curva de aprendizaje
+# Imprime la gráfica de curva de aprendizaje
 
 train_sizes, train_scores, valid_scores = learning_curve(
     pipe, train.drop('Variable 9 (Objetivo)', axis=1), train['Variable 9 (Objetivo)'], train_sizes=np.linspace(0.1, 1.0, 5))
@@ -316,10 +315,10 @@ bp_test = sms.het_breuschpagan(residuals, transformed_features)
 labels = ['LM Statistic', 'LM-Test p-value', 'F-Statistic', 'F-Test p-value']
 print(dict(zip(labels, bp_test)))
 
-# Cargar el archivo GeoJSON
+# Carga el archivo GeoJSON
 datos_geo = gpd.read_file('/content/drive/MyDrive/hgomunicipal.geojson')
 
-# Calcular la mediana de la predicción por municipio desde 2023 hasta 2030
+# Calcula la mediana de la predicción por municipio desde 2023 hasta 2030
 df_predicciones['Año'] = df_predicciones['Año'].astype(int)
 predicciones_2023_2030 = df_predicciones[(df_predicciones['Año'] >= 2023) & (df_predicciones['Año'] <= 2030)]
 medianas_predicciones = predicciones_2023_2030.groupby('Municipio')['Valor'].median()
@@ -327,20 +326,20 @@ medianas_predicciones = predicciones_2023_2030.groupby('Municipio')['Valor'].med
 # Combinar el GeoDataFrame con las medianas de las predicciones
 datos_geo = datos_geo.merge(medianas_predicciones, left_on='NOMBRE', right_index=True)
 
-# Crear un mapa de colores con un solo color (azul en este ejemplo)
+# Crea un mapa de colores con un solo color (azul en este ejemplo)
 mapa_colores = mcolors.LinearSegmentedColormap.from_list("", ["white","red"])
 
-# Crear una instancia de normalización
+# Crea una instancia de normalización
 norm = mcolors.Normalize(vmin=datos_geo['Valor'].min(), vmax=datos_geo['Valor'].max())
 
-# Graficar el mapa coroplético con el mapa de colores y la normalización especificados
+# Grafica el mapa coroplético con el mapa de colores y la normalización especificados
 fig, ax = plt.subplots(1, 1, figsize=(10, 6))
 datos_geo.plot(column='Valor', cmap=mapa_colores, norm=norm, linewidth=0.8, ax=ax, edgecolor='0.8')
 
-# Remover los ejes
+# Remove los ejes
 ax.axis('off')
 
-# Agregar una barra de colores
+# Agrega una barra de colores
 sm = plt.cm.ScalarMappable(cmap=mapa_colores, norm=norm)
 fig.colorbar(sm)
 
