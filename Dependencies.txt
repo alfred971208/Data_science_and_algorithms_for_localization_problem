@@ -1,0 +1,11 @@
+!pip install ortools 
+!pip install deap
+!pip install scikit-learn-extra
+!pip install scikit-optimize
+!pip install MFDFA
+!pip install giotto-tda
+!pip install scikit-tda
+!pip install seaborn
+!pip install pandas
+!pip install missingno
+!pip install dataframe_image
