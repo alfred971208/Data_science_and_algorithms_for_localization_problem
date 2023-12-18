@@ -1,0 +1,1 @@
+En esta carpeta están contenidos los archivos necesarios para correr el modelo
