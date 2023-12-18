@@ -21,7 +21,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from xgboost import XGBRegressor
 
 # Carga el carchivo .xlsx
-df = pd.read_excel('/content/drive/MyDrive/val.xlsx')
+df = pd.read_excel('val.xlsx') # Modificar en donde coloques la ruta del archivo
 
 # Define los datos a usar
 columnas_produccion = ['Variable 1', 'Variable 2', 'Variable 5', 'Variable 6', 'Variable 9 (Objetivo)', 'Variable 10', 'Variable 11']
