@@ -5,7 +5,7 @@ import statsmodels.api as sm
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 #  Carga los datos desde el archivo de Excel
-xls = pd.ExcelFile('/content/predicciones (9).xlsx')
+xls = pd.ExcelFile('predicciones (9).xlsx') # Modificar en donde coloques la ruta del archivo
 
 # Carga cada hoja en un dataframe
 df_hoja1 = pd.read_excel(xls, 'Sheet1')
@@ -56,8 +56,8 @@ plt.grid(True)
 plt.show()
 
 # Cargar ambos conjuntos de datos desde las hojas del archivo Excel
-df_hoja1 = pd.read_excel("/content/predicciones (9).xlsx", 'Sheet1')
-df_hoja2 = pd.read_excel("/content/predicciones (9).xlsx", 'Hoja1')
+df_hoja1 = pd.read_excel("predicciones (9).xlsx", 'Sheet1') # Modificar en donde coloques la ruta del archivo
+df_hoja2 = pd.read_excel("predicciones (9).xlsx", 'Hoja1') # Modificar en donde coloques la ruta del archivo
 
 # Renombrar la columna 'Valor' en cada dataframe para mayor claridad
 df_hoja1.rename(columns={'Valor': 'Valor_Predicho'}, inplace=True)
@@ -104,8 +104,8 @@ plt.tight_layout()
 plt.show()
 
 # Carga ambos conjuntos de datos desde las hojas del archivo Excel
-df_hoja1 = pd.read_excel("/content/predicciones (9).xlsx", 'Sheet1')
-df_hoja2 = pd.read_excel("/content/predicciones (9).xlsx", 'Hoja1')
+df_hoja1 = pd.read_excel("predicciones (9).xlsx", 'Sheet1') # Modificar en donde coloques la ruta del archivo
+df_hoja2 = pd.read_excel("predicciones (9).xlsx", 'Hoja1') # Modificar en donde coloques la ruta del archivo
 
 # Renombra la columna 'Valor' en cada dataframe para mayor claridad
 df_hoja1.rename(columns={'Valor': 'Valor_Predicho'}, inplace=True)
