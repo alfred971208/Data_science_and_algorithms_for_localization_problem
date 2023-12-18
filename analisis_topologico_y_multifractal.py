@@ -11,7 +11,7 @@ from MFDFA import MFDFA
 pd.options.display.float_format= '{:,.4f}'.format
 
 # Carga de datos
-df = pd.read_excel('/content/drive/MyDrive/Copia de val.xlsx')
+df = pd.read_excel('Copia de val.xlsx') # Modificar en donde coloques la ruta del archivo
 df = df.drop('Unnamed: 0', axis = 1)
 
 df
