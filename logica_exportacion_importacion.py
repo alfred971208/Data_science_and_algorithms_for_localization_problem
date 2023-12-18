@@ -8,7 +8,7 @@ import matplotlib.colors as mcolors
 from matplotlib.ticker import FuncFormatter
 
 # Agrega el archivo con los datos de las predicciones
-df = pd.read_excel('/content/drive/MyDrive/val 2.xlsx')
+df = pd.read_excel('val 2.xlsx') # Modificar en donde coloques la ruta del archivo
 
 # Define la columna de prodicción promedio
 # Relación entre oferta y demanda simplemente es la resta entre el promedio de la producción de carne menos el promedio del consumo de carne
@@ -27,7 +27,7 @@ data = data.astype(float)
 df
 
 # Carga el archivo GeoJSON
-geo_data = gpd.read_file('/content/drive/MyDrive/hgomunicipal.geojson')
+geo_data = gpd.read_file('hgomunicipal.geojson') # Modificar en donde coloques la ruta del archivo
 
 # Fusiona el geodataframe con los datos
 geo_data = geo_data.merge(datos, left_on='NOMBRE', right_on='Municipio')
