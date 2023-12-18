@@ -17,13 +17,13 @@ from statsmodels.tsa.stattools import adfuller
 pd.options.display.float_format= '{:,.4f}'.format
 
 # Carga de datos
-df = pd.read_excel('/content/drive/MyDrive/Copia de val.xlsx')
+df = pd.read_excel('Copia de val.xlsx') # Modificar en donde coloques la ruta del archivo
 df = df.drop('Unnamed: 0', axis = 1)
 
 df
 
 # Cargando bibliotecas y datos 
-data = pd.read_excel("/content/drive/MyDrive/Copia de val.xlsx")
+data = pd.read_excel("Copia de val.xlsx") # Modificar en donde coloques la ruta del archivo
 X = data.drop(columns=["Cabezas de ganado bovino (Objetivo)", "Municipio", "Unnamed: 0"])
 y = data["Cabezas de ganado bovino (Objetivo)"]
 
@@ -198,7 +198,7 @@ colored_lag_plot(df, columnas_produccion, years, color_map)
 # Mapa coroplético para la variable 'Cabezas de ganado bovino (Objetivo)'
 
 # Cargar los datos geográficos
-geo_data = gpd.read_file('/content/drive/MyDrive/hgomunicipal.geojson')
+geo_data = gpd.read_file('hgomunicipal.geojson') # Modificar en donde coloques la ruta del archivo
 
 # Calcular la mediana de la producción para cada municipio desde 2006 hasta 2021
 df['Año'] = df['Año'].astype(int)
